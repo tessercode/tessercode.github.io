@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" width="600" height="200">
+  <defs>
+    <!-- Cyan glow for outer cube -->
+    <filter id="glow-cyan" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Magenta glow for inner cube -->
+    <filter id="glow-mag" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Soft glow for connectors -->
+    <filter id="glow-soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Text gradient — deeper, higher contrast for light bg -->
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0099bb"/>
+      <stop offset="50%" style="stop-color:#4455cc"/>
+      <stop offset="100%" style="stop-color:#aa22dd"/>
+    </linearGradient>
+
+    <!-- Node glow -->
+    <filter id="node-glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Clip for logo icon area -->
+    <clipPath id="logoClip">
+      <rect x="0" y="0" width="200" height="200"/>
+    </clipPath>
+  </defs>
+
+  <!-- NO background rect — fully transparent -->
+
+  <g clip-path="url(#logoClip)">
+
+    <!-- Subtle ring guides -->
+    <circle cx="100" cy="100" r="68" fill="none" stroke="#0099bb" stroke-width="0.4" opacity="0.18"/>
+    <circle cx="100" cy="100" r="55" fill="none" stroke="#4455cc" stroke-width="0.3" opacity="0.12"/>
+
+    <!-- OUTER CUBE — 3 visible isometric faces, semi-transparent fills -->
+    <polygon points="100,54 142,77 100,100 58,77"
+      fill="#0099bb" fill-opacity="0.08"
+      stroke="#0099bb" stroke-width="1.4"
+      filter="url(#glow-cyan)" opacity="0.95"/>
+    <polygon points="142,77 142,123 100,146 100,100"
+      fill="#0099bb" fill-opacity="0.05"
+      stroke="#0099bb" stroke-width="1.4"
+      filter="url(#glow-cyan)" opacity="0.95"/>
+    <polygon points="58,77 100,100 100,146 58,123"
+      fill="#0099bb" fill-opacity="0.05"
+      stroke="#0099bb" stroke-width="1.4"
+      filter="url(#glow-cyan)" opacity="0.95"/>
+
+    <!-- INNER CUBE — 3 visible isometric faces -->
+    <polygon points="100,63 122,76 100,89 78,76"
+      fill="#aa22dd" fill-opacity="0.10"
+      stroke="#aa22dd" stroke-width="1.1"
+      filter="url(#glow-mag)" opacity="0.95"/>
+    <polygon points="122,76 122,102 100,115 100,89"
+      fill="#aa22dd" fill-opacity="0.07"
+      stroke="#aa22dd" stroke-width="1.1"
+      filter="url(#glow-mag)" opacity="0.95"/>
+    <polygon points="78,76 100,89 100,115 78,102"
+      fill="#aa22dd" fill-opacity="0.07"
+      stroke="#aa22dd" stroke-width="1.1"
+      filter="url(#glow-mag)" opacity="0.95"/>
+
+    <!-- 4D connector edges -->
+    <line x1="100" y1="54"  x2="100" y2="63"  stroke="#4455cc" stroke-width="1.0" filter="url(#glow-soft)" opacity="0.75"/>
+    <line x1="142" y1="77"  x2="122" y2="76"  stroke="#4455cc" stroke-width="1.0" filter="url(#glow-soft)" opacity="0.75"/>
+    <line x1="142" y1="123" x2="122" y2="102" stroke="#4455cc" stroke-width="1.0" filter="url(#glow-soft)" opacity="0.75"/>
+    <line x1="100" y1="146" x2="100" y2="115" stroke="#4455cc" stroke-width="1.0" filter="url(#glow-soft)" opacity="0.75"/>
+    <line x1="58"  y1="123" x2="78"  y2="102" stroke="#4455cc" stroke-width="1.0" filter="url(#glow-soft)" opacity="0.75"/>
+    <line x1="58"  y1="77"  x2="78"  y2="76"  stroke="#4455cc" stroke-width="1.0" filter="url(#glow-soft)" opacity="0.75"/>
+    <line x1="100" y1="77"  x2="100" y2="89"  stroke="#4455cc" stroke-width="0.8" filter="url(#glow-soft)" opacity="0.4" stroke-dasharray="2,2"/>
+
+    <!-- Outer cube neural nodes -->
+    <circle cx="100" cy="54"  r="2.8" fill="#0099bb" filter="url(#node-glow)" opacity="0.95"/>
+    <circle cx="142" cy="77"  r="2.8" fill="#0099bb" filter="url(#node-glow)" opacity="0.95"/>
+    <circle cx="142" cy="123" r="2.8" fill="#0099bb" filter="url(#node-glow)" opacity="0.95"/>
+    <circle cx="100" cy="146" r="2.8" fill="#0099bb" filter="url(#node-glow)" opacity="0.95"/>
+    <circle cx="58"  cy="123" r="2.8" fill="#0099bb" filter="url(#node-glow)" opacity="0.95"/>
+    <circle cx="58"  cy="77"  r="2.8" fill="#0099bb" filter="url(#node-glow)" opacity="0.95"/>
+
+    <!-- Inner cube neural nodes -->
+    <circle cx="100" cy="63"  r="2.2" fill="#aa22dd" filter="url(#node-glow)" opacity="0.92"/>
+    <circle cx="122" cy="76"  r="2.2" fill="#aa22dd" filter="url(#node-glow)" opacity="0.92"/>
+    <circle cx="122" cy="102" r="2.2" fill="#aa22dd" filter="url(#node-glow)" opacity="0.92"/>
+    <circle cx="100" cy="115" r="2.2" fill="#aa22dd" filter="url(#node-glow)" opacity="0.92"/>
+    <circle cx="78"  cy="102" r="2.2" fill="#aa22dd" filter="url(#node-glow)" opacity="0.92"/>
+    <circle cx="78"  cy="76"  r="2.2" fill="#aa22dd" filter="url(#node-glow)" opacity="0.92"/>
+
+    <!-- Center convergence node -->
+    <circle cx="100" cy="89" r="3.2" fill="#4455cc" filter="url(#node-glow)" opacity="1.0"/>
+    <circle cx="100" cy="89" r="1.3" fill="#e8eeff" opacity="0.95"/>
+
+  </g>
+
+  <!-- ============ WORDMARK ============ -->
+  <text x="210" y="108"
+    font-family="'Courier New', 'Lucida Console', monospace"
+    font-size="52"
+    font-weight="300"
+    letter-spacing="-1"
+    fill="url(#textGrad)"
+    opacity="1.0">tesser</text>
+
+  <text x="210" y="108"
+    font-family="'Courier New', 'Lucida Console', monospace"
+    font-size="52"
+    font-weight="700"
+    letter-spacing="-1"
+    fill="url(#textGrad)"
+    opacity="1.0"
+    dx="211">code</text>
+
+  <!-- Tagline -->
+  <text x="212" y="132"
+    font-family="'Courier New', 'Lucida Console', monospace"
+    font-size="11"
+    font-weight="400"
+    letter-spacing="3.5"
+    fill="#335577"
+    opacity="0.80">NEUROMORPHIC · RESEARCH</text>
+
+  <!-- Separator line -->
+  <line x1="212" y1="140" x2="560" y2="140" stroke="#0099bb" stroke-width="0.5" opacity="0.25"/>
+
+
+
+</svg>

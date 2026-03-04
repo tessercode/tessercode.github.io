@@ -22,7 +22,9 @@
 
   <nav class="nav" id="nav">
     <div class="nav-inner">
-      <a href="{{ '/' | relative_url }}" class="nav-brand">Tessercode</a>
+      <a href="{{ '/' | relative_url }}" class="nav-brand" aria-label="Tessercode home">
+        <img src="{{ '/assets/img/logo.svg' | relative_url }}" alt="Tessercode" class="nav-logo" />
+      </a>
 
       <ul class="nav-links" id="nav-links">
         <li><a href="{{ '/' | relative_url }}#research">Research</a></li>

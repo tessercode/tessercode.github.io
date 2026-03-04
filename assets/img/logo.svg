@@ -76,19 +76,9 @@
   <text x="210" y="108"
     font-family="'Courier New', 'Lucida Console', monospace"
     font-size="52"
-    font-weight="300"
     letter-spacing="-1"
     fill="#1f1c1b"
-    opacity="1.0">tesser</text>
-
-  <text x="210" y="108"
-    font-family="'Courier New', 'Lucida Console', monospace"
-    font-size="52"
-    font-weight="700"
-    letter-spacing="-1"
-    fill="#1f1c1b"
-    opacity="1.0"
-    dx="211">code</text>
+    opacity="1.0"><tspan font-weight="300">tesser</tspan><tspan font-weight="700">code</tspan></text>
 
   <!-- Tagline -->
   <text x="212" y="132"

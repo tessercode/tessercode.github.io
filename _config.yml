@@ -1,0 +1,27 @@
+title: Tessercode
+description: Neuromorphic Computing Research — tutorials, videos, and publications
+author: Tessercode
+baseurl: ""
+url: "https://tessercode.github.io"
+
+markdown: kramdown
+kramdown:
+  math_engine: mathjax
+  input: GFM
+  syntax_highlighter: rouge
+
+highlighter: rouge
+
+permalink: /:categories/:title/
+
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock

@@ -8,11 +8,12 @@ description: Active research projects, experiments, and work-in-progress in neur
 <section class="page-header">
   <div class="section-inner">
     <span class="section-label">Research</span>
-    <h1>Research &amp; Experiments</h1>
+    <h1>Research &amp; Widgets</h1>
     <p class="section-intro">
-      Short summaries of active projects and experiments in neuromorphic computing,
-      spiking neural networks, and brain-inspired hardware. Each entry links to the
-      associated GitHub repository.
+      My background is in software and systems engineering and during the process of choosing an advisor and research area for my Ph.D., I met with more than 15 faculty across a range of research areas. The common questions came up about what I was interested in and of course my engineering background raised its head and I would say something like "I want to build..." At that point, they would stop me and say a Ph.D. is about research, not building widgets. :)
+    </p>
+    <p class="section-intro">
+      My challenge is that for me to understand something, I need to build it. I was fortunate to find an advisor, Dr. Kurtis Cantley, who was not only supportive of that approach but actively encouraged it. Not all of the research items shared below will make it into an academic publication, but they represent important steps in my research journey. I am sharing them here so that others can also benefit from these stepping stones on their journey.
     </p>
   </div>
 </section>
@@ -46,7 +47,7 @@ description: Active research projects, experiments, and work-in-progress in neur
           <h2 class="research-entry-title">Morse Spike Encoder</h2>
           <time class="research-entry-date" datetime="2025-09">September 2025</time>
           <p>
-            This project started as a way to explore purely temporal encoding schemes for spiking neural networks, using Morse code as a test case. I am an extra class ham radio operator, call-sign KE7BKK, and have been fascinated by Morse code for years. It seemed like a natural fit to use it as a way to explore temporal encoding in SNNs, since Morse code is all about timing and patterns of short and long signals. Concurrently, I have been interested in exploring the capabilities of the RP2040 micro-controller, particularly the PIO state machines and multithreading capabilities. This project has been a fun way to combine those interests and see how well the RP2040 can handle real-time spike encoding tasks.
+            This project started as a way to explore purely temporal encoding schemes for spiking neural networks, using Morse code as a test case. I am an extra class amateur radio operator, call-sign KE7BKK, and have been fascinated by Morse code for years. It seemed like a natural fit to use it as a way to explore temporal encoding in SNNs, since Morse code is all about timing and patterns of short and long signals. Concurrently, I have been interested in exploring the capabilities of the RP2040 micro-controller, particularly the PIO state machines and multithreading capabilities. This project has been a fun way to combine those interests and see how well the RP2040 can handle real-time spike encoding tasks.
           </p>
           <p>
             The Morse Spike Encoder allows the user to connect via a serial console, set a text message, and then either send it as a one-shot or loop it continuously. It utilizes a producer/consumer model where the producer thread (morse_encoder) handles the timing and generation of morse code elements (dot/dash). The Consumer threads (poisson_encoder,temporal_duration_encoder, and temporal_onset_encoder) wait for the symbol, encode it into an appropriate spike pattern, and the utilize PIO state machines to generate the actual spike train output. Protothreads are used for lightweight concurrency, allowing the producer and consumer threads to run independently while sharing data through a simple synchronization mechanism. The project demonstrates how temporal patterns can be effectively encoded into spike trains, and serves as a testbed for exploring different encoding strategies in spiking neural networks.

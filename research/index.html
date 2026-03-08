@@ -1,0 +1,61 @@
+---
+layout: default
+title: Research
+description: Active research projects, experiments, and work-in-progress in neuromorphic computing and spiking neural networks.
+---
+
+<!-- ==================== PAGE HEADER ==================== -->
+<section class="page-header">
+  <div class="section-inner">
+    <span class="section-label">Research</span>
+    <h1>Research &amp; Experiments</h1>
+    <p class="section-intro">
+      Short summaries of active projects and experiments in neuromorphic computing,
+      spiking neural networks, and brain-inspired hardware. Each entry links to the
+      associated GitHub repository.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== RESEARCH ENTRIES ==================== -->
+<section class="research-section">
+  <div class="section-inner">
+
+    <div class="research-entries">
+
+      <!--
+        ==================== HOW TO ADD AN ENTRY ====================
+        Copy the <article> block below, paste it above or below existing entries,
+        and update:
+          - src="/assets/img/research/your-image.jpg" (or remove <img> and use placeholder)
+          - alt="..." text on the image
+          - <h2> title
+          - <p> paragraphs (1–2 recommended)
+          - GitHub href
+        Place images in /assets/img/research/
+        =============================================================
+      -->
+
+      <!-- ==================== MORSE SPIKE ENCODER ==================== -->
+      <article class="research-entry">
+        <div class="research-entry-media">
+          <img src="/assets/img/research/spike-encoder-breadboard.jpg" alt="Breadboard implementation of spike encoder" class="research-entry-img" />
+        </div>
+        <div class="research-entry-body">
+          <h2 class="research-entry-title">Morse Spike Encoder</h2>
+          <p>
+            This project started as a way to explore purely temporal encoding schemes for spiking neural networks, using Morse code as a test case. I am an extra class ham radio operator, call-sign KE7BKK, and have been fascinated by Morse code for years. It seemed like a natural fit to use it as a way to explore temporal encoding in SNNs, since Morse code is all about timing and patterns of short and long signals. Concurrently, I have been interested in exploring the capabilities of the RP2040 micro-controller, particularly the PIO state machines and multithreading capabilities. This project has been a fun way to combine those interests and see how well the RP2040 can handle real-time spike encoding tasks.
+          </p>
+          <p>
+            The Morse Spike Encoder allows the user to connect via a serial console, set a text message, and then either send it as a one-shot or loop it continuously. It utilizes a producer/consumer model where the producer thread (morse_encoder) handles the timing and generation of morse code elements (dot/dash). The Consumer threads (poisson_encoder,temporal_duration_encoder, and temporal_onset_encoder) wait for the symbol, encode it into an appropriate spike pattern, and the utilize PIO state machines to generate the actual spike train output. Protothreads are used for lightweight concurrency, allowing the producer and consumer threads to run independently while sharing data through a simple synchronization mechanism. The project demonstrates how temporal patterns can be effectively encoded into spike trains, and serves as a testbed for exploring different encoding strategies in spiking neural networks.
+          </p>
+          <div class="research-entry-links">
+            <a href="https://github.com/tessercode/morse-spike-encoder" class="link-chip">GitHub</a>
+          </div>
+        </div>
+      </article>
+
+    </div><!-- /research-entries -->
+
+  </div>
+</section>

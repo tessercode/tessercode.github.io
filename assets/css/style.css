@@ -544,8 +544,8 @@ a:hover {
 }
 
 .research-entry {
-  display: grid;
-  grid-template-columns: 280px 1fr;
+  display: flex;
+  flex-direction: column;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
@@ -560,20 +560,21 @@ a:hover {
 
 .research-entry-media {
   background: var(--accent-xlight);
-  overflow: hidden;
 }
-
-/* .research-entry-img {
-  width: 100%;
-  height: 300px;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-} */
 
 .research-entry-img {
   width: 100%;
-  /* height: 300px; */
+  aspect-ratio: 16 / 9;
+  max-height: 400px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.research-entry-img-placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 400px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -724,15 +725,6 @@ a:hover {
   }
 
   /* Research entries */
-  .research-entry {
-    grid-template-columns: 1fr;
-  }
-
-  .research-entry-img,
-  .research-entry-img-placeholder {
-    height: 200px;
-  }
-
   .research-entry-body {
     padding: 1.5rem;
   }

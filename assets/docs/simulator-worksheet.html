@@ -1,338 +1,914 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="generator" content="pandoc" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <meta name="author" content="Lucas S Hindman" />
-  <meta name="author" content="Kurtis D Cantley" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>SNN Simulator Worksheet and Research Notes</title>
-  <style>
-    code{white-space: pre-wrap;}
-    span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    /* The extra [class] is a hack that increases specificity enough to
-       override a similar rule in reveal.js */
-    ul.task-list[class]{list-style: none;}
-    ul.task-list li input[type="checkbox"] {
-      font-size: inherit;
-      width: 0.8em;
-      margin: 0 0.8em 0.2em -1.6em;
-      vertical-align: middle;
-    }
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
-  </style>
-  <link rel="stylesheet" href="simulator-worksheet.css" />
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <link rel="stylesheet" href="simulator-worksheet.css"/>
 </head>
 <body>
-<header id="title-block-header">
-<h1 class="title">SNN Simulator Worksheet and Research Notes</h1>
-<p class="author">Lucas S Hindman</p>
-<p class="author">Kurtis D Cantley</p>
-</header>
-<nav id="TOC" role="doc-toc">
-<ul>
-<li><a href="#simulator-research-notes"
-id="toc-simulator-research-notes">Simulator Research Notes</a>
-<ul>
-<li><a href="#ANNarchy" id="toc-ANNarchy">ANNarchy Research
-Notes</a></li>
-<li><a href="#Arbor" id="toc-Arbor">Arbor Research Notes</a></li>
-<li><a href="#Auryn" id="toc-Auryn">Auryn Research Notes</a></li>
-<li><a href="#BindsNET" id="toc-BindsNET">BindsNET Research
-Notes</a></li>
-<li><a href="#BrainCog" id="toc-BrainCog">BrainCog Research
-Notes</a></li>
-<li><a href="#BrainPy" id="toc-BrainPy">BrainPy Research Notes</a></li>
-<li><a href="#Brian2" id="toc-Brian2">Brian2 Research Notes</a></li>
-<li><a href="#Brian2Loihi" id="toc-Brian2Loihi">Brian2Loihi Research
-Notes</a></li>
-<li><a href="#BSim" id="toc-BSim">BSim Research Notes</a></li>
-<li><a href="#CARLsim" id="toc-CARLsim">CARLsim Research Notes</a></li>
-<li><a href="#cuSNN" id="toc-cuSNN">cuSNN Research Notes</a></li>
-<li><a href="#Doryta" id="toc-Doryta">Doryta Research Notes</a></li>
-<li><a href="#EDLUT" id="toc-EDLUT">EDLUT Research Notes</a></li>
-<li><a href="#Emergent" id="toc-Emergent">Emergent Research
-Notes</a></li>
-<li><a href="#ENLARGE" id="toc-ENLARGE">ENLARGE Research Notes</a></li>
-<li><a href="#Fugu" id="toc-Fugu">Fugu Research Notes</a></li>
-<li><a href="#Genesis" id="toc-Genesis">Genesis Research Notes</a></li>
-<li><a href="#GeNN" id="toc-GeNN">GeNN Research Notes</a></li>
-<li><a href="#jaxSNN" id="toc-jaxSNN">jaxSNN Research Notes</a></li>
-<li><a href="#Lava" id="toc-Lava">Lava Research Notes</a></li>
-<li><a href="#Memristor-Spikelearn"
-id="toc-Memristor-Spikelearn">Memristor-Spikelearn Research
-Notes</a></li>
-<li><a href="#N2S3" id="toc-N2S3">N2S3 Research Notes</a></li>
-<li><a href="#Nengo" id="toc-Nengo">Nengo Research Notes</a></li>
-<li><a href="#NengoDL" id="toc-NengoDL">NengoDL Research Notes</a></li>
-<li><a href="#NEST" id="toc-NEST">NEST Research Notes</a></li>
-<li><a href="#NEST GPU" id="toc-NEST GPU">NEST GPU Research
-Notes</a></li>
-<li><a href="#Neuron" id="toc-Neuron">Neuron Research Notes</a></li>
-<li><a href="#NeuroPack" id="toc-NeuroPack">NeuroPack Research
-Notes</a></li>
-<li><a href="#NEUTRAMS" id="toc-NEUTRAMS">NEUTRAMS Research
-Notes</a></li>
-<li><a href="#Norse" id="toc-Norse">Norse Research Notes</a></li>
-<li><a href="#PymoNNto" id="toc-PymoNNto">PymoNNto Research
-Notes</a></li>
-<li><a href="#PymoNNtorch" id="toc-PymoNNtorch">PymoNNtorch Research
-Notes</a></li>
-<li><a href="#PySNN" id="toc-PySNN">PySNN Research Notes</a></li>
-<li><a href="#RANC" id="toc-RANC">RANC Research Notes</a></li>
-<li><a href="#RAVSim" id="toc-RAVSim">RAVSim Research Notes</a></li>
-<li><a href="#SaRNN" id="toc-SaRNN">SaRNN Research Notes</a></li>
-<li><a href="#SINABS" id="toc-SINABS">SINABS Research Notes</a></li>
-<li><a href="#SNNToolbox" id="toc-SNNToolbox">SNNToolbox Research
-Notes</a></li>
-<li><a href="#snnTorch" id="toc-snnTorch">snnTorch Research
-Notes</a></li>
-<li><a href="#SPAIC" id="toc-SPAIC">SPAIC Research Notes</a></li>
-<li><a href="#SPIKE" id="toc-SPIKE">SPIKE Research Notes</a></li>
-<li><a href="#SpikingJelly" id="toc-SpikingJelly">SpikingJelly Research
-Notes</a></li>
-<li><a href="#SpykeTorch" id="toc-SpykeTorch">SpykeTorch Research
-Notes</a></li>
-<li><a href="#Spyx" id="toc-Spyx">Spyx Research Notes</a></li>
-<li><a href="#SuperNeuro" id="toc-SuperNeuro">SuperNeuro Research
-Notes</a></li>
-</ul></li>
-</ul>
-</nav>
-<p>This document provides a capability summary worksheet for the
-open-source spiking neural network (SNN) simulators surveyed in
-<em>Finding Order in CHAOSS</em>, followed by detailed research notes
-for each simulator. Each entry in the worksheet links to its
-corresponding notes section via the <strong>[notes]</strong>
-reference.</p>
-<div class="table*">
-<div class="center">
-<div class="tabular">
-<p><span>@|i||f|f|f|f|f||g|g|g||h|h|h|h||d|d|d||e|@</span></p>
-<p>&amp;</p>
-<div class="turn">
-<p><span>90</span><strong>Bio-Inspired</strong></p>
+<h1>SNN Simulator Worksheet and Research Notes</h1>
+<p class="authors">Lucas S Hindman &amp; Kurtis D Cantley</p>
+<p>This document provides a capability summary worksheet for the open-source spiking
+neural network (SNN) simulators surveyed in <em>Finding Order in CHAOSS</em>, followed
+by detailed research notes for each simulator. Each entry in the worksheet links to its
+corresponding notes section via the <strong>[notes]</strong> reference.</p>
+
+<section id="worksheet">
+<h2>Simulator Capability Worksheet</h2>
+<div class="table-scroll">
+<table class="sim-table" aria-label="SNN Simulator Capability Worksheet">
+<thead>
+<tr class="group-row">
+  <th class="group-sim" colspan="1"></th>
+  <th class="group-neuron" colspan="5">Neuron Model Family</th>
+  <th class="group-learning" colspan="3">Learning Method</th>
+  <th class="group-hardware" colspan="4">Hardware Support</th>
+  <th class="group-viability" colspan="4">Viability Scorecard</th>
+</tr>
+<tr class="col-header-row">
+  <th class="col-sim"><div class="rotate">Simulator</div></th>
+  <th class="col-neuron"><div class="rotate">Bio-Inspired</div></th>
+  <th class="col-neuron"><div class="rotate">Bio-Plausible</div></th>
+  <th class="col-neuron"><div class="rotate">Integrate-and-Fire</div></th>
+  <th class="col-neuron"><div class="rotate">Compartmental</div></th>
+  <th class="col-neuron"><div class="rotate">Equation-Based</div></th>
+  <th class="col-learning"><div class="rotate">Supervised</div></th>
+  <th class="col-learning"><div class="rotate">Unsupervised</div></th>
+  <th class="col-learning"><div class="rotate">Static</div></th>
+  <th class="col-hardware"><div class="rotate">CPU</div></th>
+  <th class="col-hardware"><div class="rotate">GPU</div></th>
+  <th class="col-hardware"><div class="rotate">FPGA</div></th>
+  <th class="col-hardware"><div class="rotate">Neuromorphic</div></th>
+  <th class="col-viability"><div class="rotate">Freshness</div></th>
+  <th class="col-viability"><div class="rotate">Documentation</div></th>
+  <th class="col-viability"><div class="rotate">Community</div></th>
+  <th class="col-viability"><div class="rotate">Viability Score</div></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/ANNarchy/ANNarchy">ANNarchy</a>&nbsp;<a class="notes-link" href="#ANNarchy">[notes]</a></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">6</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/arbor-sim/arbor/">Arbor</a>&nbsp;<a class="notes-link" href="#Arbor">[notes]</a></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">6</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/fzenke/auryn">Auryn</a>&nbsp;<a class="notes-link" href="#Auryn">[notes]</a></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">1</td>
+  <td class="col-viability">5</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/BindsNET/bindsnet">BindsNET</a>&nbsp;<a class="notes-link" href="#BindsNET">[notes]</a></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">6</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/BrainCog-X/Brain-Cog">BrainCog</a>&nbsp;<a class="notes-link" href="#BrainCog">[notes]</a></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">6</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/brainpy/BrainPy">BrainPy</a>&nbsp;<a class="notes-link" href="#BrainPy">[notes]</a></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">6</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://briansimulator.org/">Brian2</a>&nbsp;<a class="notes-link" href="#Brian2">[notes]</a></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">6</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/sagacitysite/brian2_loihi">Brian2Loihi</a>&nbsp;<a class="notes-link" href="#Brian2Loihi">[notes]</a></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-viability">1</td>
+  <td class="col-viability">1</td>
+  <td class="col-viability">1</td>
+  <td class="col-viability">3</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/CRAFT-THU/BSim">BSim</a>&nbsp;<a class="notes-link" href="#BSim">[notes]</a></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-viability">0</td>
+  <td class="col-viability">0</td>
+  <td class="col-viability">1</td>
+  <td class="col-viability">1</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/UCI-CARL/CARLsim6">CARLsim</a>&nbsp;<a class="notes-link" href="#CARLsim">[notes]</a></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">6</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/tudelft/cuSNN">cuSNN</a>&nbsp;<a class="notes-link" href="#cuSNN">[notes]</a></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-viability">0</td>
+  <td class="col-viability">1</td>
+  <td class="col-viability">1</td>
+  <td class="col-viability">2</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/helq/doryta">Doryta</a>&nbsp;<a class="notes-link" href="#Doryta">[notes]</a></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-viability">1</td>
+  <td class="col-viability">1</td>
+  <td class="col-viability">0</td>
+  <td class="col-viability">2</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/EduardoRosLab/edlut">EDLUT</a>&nbsp;<a class="notes-link" href="#EDLUT">[notes]</a></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">0</td>
+  <td class="col-viability">1</td>
+  <td class="col-viability">3</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/emer/emergent">Emergent</a>&nbsp;<a class="notes-link" href="#Emergent">[notes]</a></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">6</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/yhx/enlarge">ENLARGE</a>&nbsp;<a class="notes-link" href="#ENLARGE">[notes]</a></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-viability">1</td>
+  <td class="col-viability">1</td>
+  <td class="col-viability">1</td>
+  <td class="col-viability">3</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/sandialabs/Fugu">Fugu</a>&nbsp;<a class="notes-link" href="#Fugu">[notes]</a></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">1</td>
+  <td class="col-viability">5</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/genesis-sim/genesis-2.4">Genesis</a>&nbsp;<a class="notes-link" href="#Genesis">[notes]</a></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-viability">0</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">1</td>
+  <td class="col-viability">3</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/genn-team/genn">GeNN</a>&nbsp;<a class="notes-link" href="#GeNN">[notes]</a></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">6</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/electronicvisions/jaxsnn">jaxSNN</a>&nbsp;<a class="notes-link" href="#jaxSNN">[notes]</a></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">1</td>
+  <td class="col-viability">5</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/lava-nc/lava">Lava</a>&nbsp;<a class="notes-link" href="#Lava">[notes]</a></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">6</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/YLab-UChicago/Memristor-Spikelearn">Memristor-Spikelearn</a>&nbsp;<a class="notes-link" href="#Memristor-Spikelearn">[notes]</a></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">1</td>
+  <td class="col-viability">0</td>
+  <td class="col-viability">3</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://git.renater.fr/anonscm/git/n2s3/n2s3.git/">N2S3</a>&nbsp;<a class="notes-link" href="#N2S3">[notes]</a></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-viability">0</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">4</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://www.nengo.ai/">Nengo</a>&nbsp;<a class="notes-link" href="#Nengo">[notes]</a></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">6</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/nengo/nengo-dl">NengoDL</a>&nbsp;<a class="notes-link" href="#NengoDL">[notes]</a></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">6</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/nest/nest-simulator">NEST</a>&nbsp;<a class="notes-link" href="#NEST">[notes]</a></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">6</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/nest/nest-gpu">NEST GPU</a>&nbsp;<a class="notes-link" href="#NEST%20GPU">[notes]</a></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">1</td>
+  <td class="col-viability">5</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/neuronsimulator/nrn">Neuron</a>&nbsp;<a class="notes-link" href="#Neuron">[notes]</a></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">6</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/hjq310/NeuroPack">NeuroPack</a>&nbsp;<a class="notes-link" href="#NeuroPack">[notes]</a></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-viability">1</td>
+  <td class="col-viability">1</td>
+  <td class="col-viability">0</td>
+  <td class="col-viability">2</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/hoangt/neutrams">NEUTRAMS</a>&nbsp;<a class="notes-link" href="#NEUTRAMS">[notes]</a></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-viability">0</td>
+  <td class="col-viability">0</td>
+  <td class="col-viability">0</td>
+  <td class="col-viability">0</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/norse/norse">Norse</a>&nbsp;<a class="notes-link" href="#Norse">[notes]</a></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">6</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/trieschlab/PymoNNto">PymoNNto</a>&nbsp;<a class="notes-link" href="#PymoNNto">[notes]</a></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">1</td>
+  <td class="col-viability">5</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/cnrl/PymoNNtorch">PymoNNtorch</a>&nbsp;<a class="notes-link" href="#PymoNNtorch">[notes]</a></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">1</td>
+  <td class="col-viability">5</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/BasBuller/PySNN">PySNN</a>&nbsp;<a class="notes-link" href="#PySNN">[notes]</a></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-viability">0</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">1</td>
+  <td class="col-viability">3</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/UA-RCL/RANC">RANC</a>&nbsp;<a class="notes-link" href="#RANC">[notes]</a></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-viability">1</td>
+  <td class="col-viability">0</td>
+  <td class="col-viability">1</td>
+  <td class="col-viability">2</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/Rao-Sanaullah/RAVSim">RAVSim</a>&nbsp;<a class="notes-link" href="#RAVSim">[notes]</a></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">0</td>
+  <td class="col-viability">4</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/WISION-Lab/sarnn">SaRNN</a>&nbsp;<a class="notes-link" href="#SaRNN">[notes]</a></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">0</td>
+  <td class="col-viability">0</td>
+  <td class="col-viability">2</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/synsense/sinabs">SINABS</a>&nbsp;<a class="notes-link" href="#SINABS">[notes]</a></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">6</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/NeuromorphicProcessorProject/snn_toolbox">SNNToolbox</a>&nbsp;<a class="notes-link" href="#SNNToolbox">[notes]</a></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-viability">1</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">5</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/jeshraghian/snntorch">snnTorch</a>&nbsp;<a class="notes-link" href="#snnTorch">[notes]</a></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">6</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/zju-bmi-lab/SPAIC">SPAIC</a>&nbsp;<a class="notes-link" href="#SPAIC">[notes]</a></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">1</td>
+  <td class="col-viability">5</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/OFTNAI/Spike">SPIKE</a>&nbsp;<a class="notes-link" href="#SPIKE">[notes]</a></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-viability">0</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">1</td>
+  <td class="col-viability">3</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/fangwei123456/spikingjelly">SpikingJelly</a>&nbsp;<a class="notes-link" href="#SpikingJelly">[notes]</a></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">6</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/miladmozafari/SpykeTorch">SpykeTorch</a>&nbsp;<a class="notes-link" href="#SpykeTorch">[notes]</a></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-viability">1</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">0</td>
+  <td class="col-viability">3</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/kmheckel/spyx">Spyx</a>&nbsp;<a class="notes-link" href="#Spyx">[notes]</a></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">1</td>
+  <td class="col-viability">5</td>
+</tr>
+<tr>
+  <td class="sim-name col-sim"><a href="https://github.com/ORNL/superneuro">SuperNeuro</a>&nbsp;<a class="notes-link" href="#SuperNeuro">[notes]</a></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-neuron"></td>
+  <td class="col-neuron"></td>
+  <td class="col-learning"></td>
+  <td class="col-learning"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-learning"></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"><span class="check" aria-label="yes">✓</span></td>
+  <td class="col-hardware"></td>
+  <td class="col-hardware"></td>
+  <td class="col-viability">2</td>
+  <td class="col-viability">1</td>
+  <td class="col-viability">1</td>
+  <td class="col-viability">4</td>
+</tr>
+</tbody>
+</table>
 </div>
-<p>&amp;</p>
-<div class="turn">
-<p><span>90</span><strong>Bio-Plausible</strong></p>
-</div>
-<p>&amp;</p>
-<div class="turn">
-<p><span>90</span><strong>Integrate-and-Fire</strong></p>
-</div>
-<p>&amp;</p>
-<div class="turn">
-<p><span>90</span><strong>Compartmental</strong></p>
-</div>
-<p>&amp;</p>
-<div class="turn">
-<p><span>90</span><strong>Equation-Based</strong></p>
-</div>
-<p>&amp;</p>
-<div class="turn">
-<p><span>90</span><strong>Supervised</strong></p>
-</div>
-<p>&amp;</p>
-<div class="turn">
-<p><span>90</span><strong>Unsupervised</strong></p>
-</div>
-<p>&amp;</p>
-<div class="turn">
-<p><span>90</span><strong>Static</strong></p>
-</div>
-<p>&amp;</p>
-<div class="turn">
-<p><span>90</span><strong>CPU</strong></p>
-</div>
-<p>&amp;</p>
-<div class="turn">
-<p><span>90</span><strong>GPU</strong></p>
-</div>
-<p>&amp;</p>
-<div class="turn">
-<p><span>90</span><strong>FPGA</strong></p>
-</div>
-<p>&amp;</p>
-<div class="turn">
-<p><span>90</span><strong>Neuromorphic</strong></p>
-</div>
-<p>&amp;</p>
-<div class="turn">
-<p><span>90</span><strong>Freshness</strong></p>
-</div>
-<p>&amp;</p>
-<div class="turn">
-<p><span>90</span><strong>Documentation</strong></p>
-</div>
-<p>&amp;</p>
-<div class="turn">
-<p><span>90</span><strong>Community</strong></p>
-</div>
-<p>&amp;</p>
-<div class="turn">
-<p><span>90</span><strong>Viability Score</strong></p>
-</div>
-<p><br />
-<a href="https://github.com/ANNarchy/ANNarchy">ANNarchy</a> <a
-href="#ANNarchy">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; 2 &amp; 2 &amp; 2 &amp; 6<br />
-<a href="https://github.com/arbor-sim/arbor/">Arbor</a> <a
-href="#Arbor">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; 2 &amp; 2 &amp; 2 &amp; 6<br />
-<a href="https://github.com/fzenke/auryn">Auryn</a> <a
-href="#Auryn">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; 2 &amp; 2 &amp; 1 &amp; 5<br />
-<a href="https://github.com/BindsNET/bindsnet">BindsNET</a> <a
-href="#BindsNET">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; 2 &amp; 2 &amp; 2 &amp; 6<br />
-<a href="https://github.com/BrainCog-X/Brain-Cog">BrainCog</a> <a
-href="#BrainCog">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; 2 &amp; 2 &amp; 2 &amp; 6<br />
-<a href="https://github.com/brainpy/BrainPy">BrainPy</a> <a
-href="#BrainPy">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; 2 &amp; 2 &amp; 2 &amp; 6<br />
-<a href="https://briansimulator.org/">Brian2</a> <a
-href="#Brian2">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; 2 &amp; 2 &amp; 2 &amp; 6<br />
-<a
-href="https://github.com/sagacitysite/brian2_loihi">Brian2Loihi</a> <a
-href="#Brian2Loihi">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; &amp; 1 &amp; 1 &amp; 1 &amp;
-3<br />
-<a href="https://github.com/CRAFT-THU/BSim">BSim</a> <a
-href="#BSim">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; 0 &amp; 0 &amp; 1 &amp; 1<br />
-<a href="https://github.com/UCI-CARL/CARLsim6">CARLsim</a> <a
-href="#CARLsim">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; 2 &amp; 2 &amp; 2 &amp; 6<br />
-<a href="https://github.com/tudelft/cuSNN">cuSNN</a> <a
-href="#cuSNN">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; 0 &amp; 1 &amp; 1 &amp; 2<br />
-<a href="https://github.com/helq/doryta">Doryta</a> <a
-href="#Doryta">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; 1 &amp; 1 &amp; 0 &amp; 2<br />
-<a href="https://github.com/EduardoRosLab/edlut">EDLUT</a> <a
-href="#EDLUT">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; 2 &amp; 0 &amp; 1 &amp; 3<br />
-<a href="https://github.com/emer/emergent">Emergent</a> <a
-href="#Emergent">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; 2 &amp; 2 &amp; 2 &amp; 6<br />
-<a href="https://github.com/yhx/enlarge">ENLARGE</a> <a
-href="#ENLARGE">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; 1 &amp; 1 &amp; 1 &amp; 3<br />
-<a href="https://github.com/sandialabs/Fugu">Fugu</a> <a
-href="#Fugu">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; 2 &amp; 2 &amp; 1 &amp; 5<br />
-<a href="https://github.com/genesis-sim/genesis-2.4">Genesis</a> <a
-href="#Genesis">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; 0 &amp; 2 &amp; 1 &amp; 3<br />
-<a href="https://github.com/genn-team/genn">GeNN</a> <a
-href="#GeNN">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; 2 &amp; 2 &amp; 2 &amp; 6<br />
-<a href="https://github.com/electronicvisions/jaxsnn">jaxSNN</a> <a
-href="#jaxSNN">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; 2 &amp; 2 &amp; 1 &amp; 5<br />
-<a href="https://github.com/lava-nc/lava">Lava</a> <a
-href="#Lava">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; 2 &amp; 2 &amp; 2 &amp; 6<br />
-<a
-href="https://github.com/YLab-UChicago/Memristor-Spikelearn">Memristor-Spikelearn</a> <a
-href="#Memristor-Spikelearn">[notes]</a> &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; 2 &amp; 1 &amp; 0 &amp;
-3<br />
-<a href="https://git.renater.fr/anonscm/git/n2s3/n2s3.git/">N2S3</a> <a
-href="#N2S3">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; 0 &amp; 2 &amp; 2 &amp; 4<br />
-<a href="https://www.nengo.ai/">Nengo</a> <a href="#Nengo">[notes]</a>
-&amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; 2 &amp; 2 &amp; 2 &amp; 6<br />
-<a href="https://github.com/nengo/nengo-dl">NengoDL</a> <a
-href="#NengoDL">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; 2 &amp; 2 &amp; 2 &amp; 6<br />
-<a href="https://github.com/nest/nest-simulator">NEST</a> <a
-href="#NEST">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; 2 &amp; 2 &amp; 2 &amp; 6<br />
-<a href="https://github.com/nest/nest-gpu">NEST GPU</a> <a
-href="#NEST GPU">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; 2 &amp; 2 &amp; 1 &amp; 5<br />
-<a href="https://github.com/neuronsimulator/nrn">Neuron</a> <a
-href="#Neuron">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; 2 &amp; 2 &amp; 2 &amp; 6<br />
-<a href="https://github.com/hjq310/NeuroPack">NeuroPack</a> <a
-href="#NeuroPack">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; 1 &amp; 1 &amp; 0 &amp; 2<br />
-<a href="https://github.com/hoangt/neutrams">NEUTRAMS</a> <a
-href="#NEUTRAMS">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; 0 &amp; 0 &amp; 0 &amp; 0<br />
-<a href="https://github.com/norse/norse">Norse</a> <a
-href="#Norse">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; 2 &amp; 2 &amp; 2 &amp; 6<br />
-<a href="https://github.com/trieschlab/PymoNNto">PymoNNto</a> <a
-href="#PymoNNto">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; 2 &amp; 2 &amp; 1 &amp; 5<br />
-<a href="https://github.com/cnrl/PymoNNtorch">PymoNNtorch</a> <a
-href="#PymoNNtorch">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; &amp; 2 &amp; 2 &amp; 1 &amp;
-5<br />
-<a href="https://github.com/BasBuller/PySNN">PySNN</a> <a
-href="#PySNN">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; 0 &amp; 2 &amp; 1 &amp; 3<br />
-<a href="https://github.com/UA-RCL/RANC">RANC</a> <a
-href="#RANC">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; 1 &amp; 0 &amp; 1 &amp; 2<br />
-<a href="https://github.com/Rao-Sanaullah/RAVSim">RAVSim</a> <a
-href="#RAVSim">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; 2 &amp; 2 &amp; 0 &amp; 4<br />
-<a href="https://github.com/WISION-Lab/sarnn">SaRNN</a> <a
-href="#SaRNN">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; 2 &amp; 0 &amp; 0 &amp; 2<br />
-<a href="https://github.com/synsense/sinabs">SINABS</a> <a
-href="#SINABS">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; 2 &amp; 2 &amp; 2 &amp; 6<br />
-<a
-href="https://github.com/NeuromorphicProcessorProject/snn_toolbox">SNNToolbox</a> <a
-href="#SNNToolbox">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; 1 &amp; 2 &amp; 2 &amp; 5<br />
-<a href="https://github.com/jeshraghian/snntorch">snnTorch</a> <a
-href="#snnTorch">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; 2 &amp; 2 &amp; 2 &amp; 6<br />
-<a href="https://github.com/zju-bmi-lab/SPAIC">SPAIC</a> <a
-href="#SPAIC">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; 2 &amp; 2 &amp; 1 &amp; 5<br />
-<a href="https://github.com/OFTNAI/Spike">SPIKE</a> <a
-href="#SPIKE">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; 0 &amp; 2 &amp; 1 &amp; 3<br />
-<a
-href="https://github.com/fangwei123456/spikingjelly">SpikingJelly</a> <a
-href="#SpikingJelly">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; &amp; 2 &amp; 2 &amp; 2 &amp;
-6<br />
-<a href="https://github.com/miladmozafari/SpykeTorch">SpykeTorch</a> <a
-href="#SpykeTorch">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; 1 &amp; 2 &amp; 0 &amp; 3<br />
-<a href="https://github.com/kmheckel/spyx">Spyx</a> <a
-href="#Spyx">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; 2 &amp; 2 &amp; 1 &amp; 5<br />
-<a href="https://github.com/ORNL/superneuro">SuperNeuro</a> <a
-href="#SuperNeuro">[notes]</a> &amp; &amp; &amp; &amp; &amp; &amp; &amp;
-&amp; &amp; &amp; &amp; &amp; &amp; 2 &amp; 1 &amp; 1 &amp; 4<br />
-</p>
-<p>&amp; &amp; &amp; &amp;<br />
-&amp; &amp; &amp; &amp;<br />
-</p>
-</div>
-<p><span id="simWorksheet" label="simWorksheet"></span></p>
-</div>
-</div>
-<h1 class="unnumbered" id="simulator-research-notes">Simulator Research
-Notes</h1>
+</section>
+
+<section id="notes">
+<h2>Simulator Research Notes</h2>
 <h2 class="unnumbered" id="ANNarchy">ANNarchy Research Notes</h2>
 <p>ANNarchy is a neural simulator designed for simulating networks of
 spiking neurons on parallel hardware, supporting both rate-coded and
@@ -1659,5 +2235,8 @@ href="https://github.com/ORNL/superneuromat">github.com/ORNL/superneuromat</a></
 <p><a
 href="https://github.com/ORNL/superneuroabm">github.com/ORNL/superneuroabm</a></p>
 </div>
+
+</section>
+
 </body>
 </html>

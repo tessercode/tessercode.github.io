@@ -1,0 +1,61 @@
+/* simulator-worksheet.css */
+
+body {
+    font-family: Georgia, serif;
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 960px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+    color: #222;
+}
+
+h1 { font-size: 1.8rem; margin-bottom: 0.25rem; }
+h2 { font-size: 1.4rem; border-bottom: 1px solid #ccc; padding-bottom: 0.25rem; margin-top: 2.5rem; }
+
+/* Table of contents */
+nav#TOC {
+    background: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+}
+nav#TOC ul { margin: 0; padding-left: 1.25rem; }
+nav#TOC li { margin: 0.2rem 0; }
+
+/* Worksheet table: allow horizontal scrolling on narrow viewports */
+table {
+    border-collapse: collapse;
+    font-size: 0.8rem;
+    width: 100%;
+    overflow-x: auto;
+    display: block;
+    white-space: nowrap;
+}
+th, td {
+    border: 1px solid #aaa;
+    padding: 0.3rem 0.5rem;
+    text-align: center;
+    vertical-align: middle;
+}
+th:first-child, td:first-child {
+    text-align: left;
+    white-space: normal;
+    min-width: 10rem;
+}
+
+/* tcolorbox "at a glance" sidebars */
+div.tcolorbox, div.mybox {
+    background: #eef4fb;
+    border: 1px solid #6a9fd8;
+    border-left: 4px solid #2a6bb0;
+    border-radius: 4px;
+    padding: 0.75rem 1rem;
+    margin: 1rem 0 1.5rem 0;
+    font-size: 0.95rem;
+}
+
+a { color: #2a6bb0; }
+a:hover { text-decoration: underline; }

@@ -21,6 +21,28 @@ description: Papers, preprints, and academic work in neuromorphic computing and 
 
     <div class="research-entries">
 
+      <!-- ==================== TEMPO ==================== -->
+      <article class="research-entry">
+        <div class="research-entry-media">
+          <img src="/assets/img/research/tempo-header.png" alt="Bar chart and per-letter plot showing classification accuracy dropping from about 76% with intact spike timing to about 27% with shuffled spikes and near chance with timing collapsed" class="research-entry-img" />
+        </div>
+        <div class="research-entry-body">
+          <h2 class="research-entry-title">TEMPO: A Stochastic Benchmarking Protocol for Evaluating Temporal Robustness in Spiking Neural Networks</h2>
+          <time class="research-entry-date" datetime="2026-07">July 2026</time>
+          <p>
+            Spiking neural networks are set apart from conventional architectures by their leaky-integrator dynamics and temporal memory, yet the benchmarks most often used to evaluate them don't exercise those properties. In datasets such as N-MNIST and DVS-Gesture, the discriminative information lies in spatial features, so collapsing all of the spike timing into a single bin leaves classification accuracy largely intact. Like my Morse Spike Encoder project, TEMPO turns to Morse code, where meaning lives entirely in the duration of the marks and the silences between them. Existing Morse benchmarks assume machine-perfect timing, though, and real human operators are anything but.
+          </p>
+          <p>
+            TEMPO (Temporal Encoding Morse Protocol for Operators) places human operator variability at the center of its design. Three stochastic parameters, the dash-to-dot ratio, word-level speed, and per-element jitter, model an operator's characteristic "fist," with distributions fitted to 44 real recordings. A proof-of-concept multi-timescale network reaches 75.7% accuracy, and shuffling spike order while preserving counts collapses that to a count-based baseline, confirming the task can't be solved without timing. The paper was published in <em>Neuromorphic Computing and Engineering</em> as open access, and the repository includes the encoding library, pre-built datasets, and the notebooks for every experiment in the paper, with 75.7% standing as an open baseline for future architectures.
+          </p>
+          <div class="research-entry-links">
+            <a href="https://iopscience.iop.org/article/10.1088/2634-4386/ae84f7/meta" class="link-chip">NCE (paper)</a>
+            <a href="https://github.com/tessercode/tempo" class="link-chip">GitHub (artifacts)</a>
+            <a href="https://doi.org/10.5281/zenodo.20648716" class="link-chip">Zenodo (archive)</a>
+          </div>
+        </div>
+      </article>
+
       <!-- ==================== Software Simulator Survey ==================== -->
       <article class="research-entry">
         <div class="research-entry-media">

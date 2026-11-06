@@ -67,6 +67,27 @@ description: Papers, preprints, and academic work in neuromorphic computing and 
         </div>
       </article>
 
+      <!-- ==================== PVAC ==================== -->
+      <article class="research-entry">
+        <div class="research-entry-media">
+          <img src="/assets/img/research/pvac-header.png" alt="PVAC architecture diagram: a data set feeds the Activity Categorizer, Version Categorizer, and Version Number Delta components, which produce activity levels, version categories, and a VND score" class="research-entry-img" />
+        </div>
+        <div class="research-entry-body">
+          <h2 class="research-entry-title">PVAC: Package Version Activity Categorizer, Leveraging Semantic Versioning in a Heterogeneous System</h2>
+          <time class="research-entry-date" datetime="2025-05">May 2025</time>
+          <p>
+            Modern open-source ecosystems, such as those managed by GNU/Linux distributions, are made up of thousands of packages developed independently by diverse communities. Package managers handle installation and dependency resolution, but they offer no systematic way to evaluate how actively those packages are being developed or how their versions change across releases. This paper, with first author Shane Panter and co-author Nasir Eisty, introduces a method and prototype tool for measuring that version activity across a heterogeneous package ecosystem.
+          </p>
+          <p>
+            PVAC has three components. The Version Categorizer uses tailored regular expressions to parse epoch, major, minor, and patch details from diverse version strings and sort them into Semantic, Extended-Semantic, Semi-Semantic, and Dist-Native categories. The Version Number Delta computes a numeric score for the aggregated version changes across an ecosystem, and the Activity Categorizer classifies each package from Very Active to Sedentary. We evaluated PVAC on 22,535 packages from recent Debian and Ubuntu releases, providing empirical evidence that semantic versioning, including adapted variations, is predominantly used across these ecosystems. The paper was published in <em>Empirical Software Engineering</em>, and the dataset is available on figshare.
+          </p>
+          <div class="research-entry-links">
+            <a href="https://link.springer.com/article/10.1007/s10664-025-10678-2" class="link-chip">EMSE (paper)</a>
+            <a href="https://arxiv.org/abs/2409.04588" class="link-chip">arXiv (preprint)</a>
+            <a href="https://doi.org/10.6084/m9.figshare.28691561" class="link-chip">figshare (dataset)</a>
+          </div>
+        </div>
+      </article>
 
     </div><!-- /research-entries -->
 

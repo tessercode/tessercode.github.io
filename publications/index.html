@@ -1,0 +1,52 @@
+---
+layout: default
+title: Publications
+description: Papers, preprints, and academic work in neuromorphic computing and spiking neural networks, with links to PDFs, DOIs, and supporting artifacts.
+---
+
+<!-- ==================== PAGE HEADER ==================== -->
+<section class="page-header">
+  <div class="section-inner">
+    <span class="section-label">Publications</span>
+    <h1>Publications</h1>
+    <p class="section-intro">
+      Papers and academic work from my research, along with the data, notes, and tools behind them so that others can use and build upon them.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== PUBLICATION ENTRIES ==================== -->
+<section class="research-section">
+  <div class="section-inner">
+
+    <div class="research-entries">
+
+      <!-- ==================== Software Simulator Survey ==================== -->
+      <article class="research-entry">
+        <div class="research-entry-media">
+          <img src="/assets/img/research/survey-worksheet-header.png" alt="Screenshot of portion of software simulator survey worksheet" class="research-entry-img" />
+        </div>
+        <div class="research-entry-body">
+          <h2 class="research-entry-title">Software Simulator Survey</h2>
+          <time class="research-entry-date" datetime="2026">2026</time>
+          <p>
+            As I was starting my journey in Neuromorphic Computing, I wanted to get a better understanding of the landscape of software simulators for spiking neural networks. It was difficult for me as a newcomer as I was reading various papers to understand which simulators were open source and publicly available and those that were not. Some were software frameworks or libraries that only supported hardware simulators and others simply provided tools to extend the capabilities of existing software simulators, but did not provide the simulator itself. Some simulators are released open source, but have not been maintained since that initial release while others provide extensive documentation and regular updates.
+          </p>
+          <p>
+            What began as a simple literature review in September 2024 quickly turned into a months-long project to identify the current state of open-source software simulators for spiking neural networks, cataloging supported neuron models, learning mechanisms, and supported hardware platforms. It also builds upon my previous work with software engineering research and the open-source CHAOSS project to develop a viability scorecard that I use to examine the code freshness, documentation, and community engagement of each simulator. The resulting paper, <em>Finding Order in CHAOSS: A Survey of Open-Source Spiking Neural Network Software Simulators</em>, was published in IEEE Access in 2026. The open-source repository includes the simulator data, research notes, methodology, and worksheet for others to use and build upon in their own research journeys.
+            
+          </p>
+          <div class="research-entry-links">
+            <a href="https://ieeexplore.ieee.org/document/11517393" class="link-chip">IEEE Access (paper)</a>
+            <a href="https://github.com/tessercode/chaoss" class="link-chip">GitHub (artifacts)</a>
+            <a href="/assets/docs/simulator-worksheet.pdf" class="link-chip">Worksheet (PDF)</a>
+            <a href="/assets/docs/simulator-worksheet.html" class="link-chip">Worksheet (HTML)</a>
+          </div>
+        </div>
+      </article>
+
+
+    </div><!-- /research-entries -->
+
+  </div>
+</section>
